@@ -109,6 +109,14 @@ export class BookformComponent implements OnInit, IBookFormComponent {
     const total: number = nightlyFee * this.durasimenginap.value;
 
     if (this.id) {
+      if (this.booking?.status === 'checked-out') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: `Tamu ${this.booking.reservee.name} sudah ${this.booking.status}`,
+        });
+        return;
+      }
       const guest: Guest = {
         id: this.booking!.reservee.id,
         name: this.nama.value,
@@ -123,9 +131,26 @@ export class BookformComponent implements OnInit, IBookFormComponent {
         guestCount: this.jumlahtamu.value,
         reservee: guest,
       };
-      this.bookService.save(this.booking!).subscribe();
-      this.onFormReset();
-      this.router.navigateByUrl('book');
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `Apakah Kamu Yakin Ingin  Merubah pesanan tamu ${this.booking.reservee.name} di kamar no ${this.booking.roomNumber} dengan durasi ${this.booking.duration} dengan harga ${total}`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yakin!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.bookService.save(this.booking!).subscribe();
+          this.onFormReset();
+          Swal.fire(
+            `Berhasil Pesan Hotel!`,
+            `Tamu ${this.booking?.reservee.name} telah melakukan pemesanan untuk kamar ${this.booking?.roomNumber} selama ${this.booking?.duration} malam dengan total tagihan sebesar ${total}.`,
+            'success'
+          );
+          this.router.navigateByUrl('book');
+        }
+      });
       return;
     }
     const guest: Guest = {

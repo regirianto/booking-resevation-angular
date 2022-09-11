@@ -8,9 +8,10 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { LoginField } from '../models/login-field.models';
-import { LoginToken } from '../models/login.models';
+import { Login, LoginToken } from '../models/login.models';
 import { AuthService } from '../services/auth.services';
 import { map, Observable, Subscription } from 'rxjs';
+import { SessionService } from 'src/app/shared/services/session.services';
 
 @Component({
   selector: 'app-login',
@@ -20,11 +21,13 @@ import { map, Observable, Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   field: typeof LoginField = LoginField;
   showPassword: boolean = false;
+  jwt: Login | null = JSON.parse(this.sessionService.get('token'));
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
-    private readonly activateRoute: ActivatedRoute
+    private readonly activateRoute: ActivatedRoute,
+    private readonly sessionService: SessionService
   ) {}
 
   loginForm: FormGroup<any> = new FormGroup({
@@ -39,7 +42,9 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.buildForm()
+    if (this.jwt) {
+      this.router.navigateByUrl('');
+    }
   }
 
   onSubmit(): void {

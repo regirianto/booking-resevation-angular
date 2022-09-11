@@ -5,8 +5,6 @@ import { RouteGuard } from '../shared/guard/route.guard';
 const routes: Routes = [
   {
     path: '',
-    canActivate: [RouteGuard],
-    canActivateChild: [RouteGuard],
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {

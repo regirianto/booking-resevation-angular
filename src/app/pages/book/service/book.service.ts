@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
 import { SessionService } from 'src/app/shared/services/session.services';
 import { Book } from '../models/book.models';
-import { Guest } from '../models/guest.models';
 
 const BOOK_KEY = 'books';
 
@@ -30,7 +29,7 @@ export class BookService {
                   name: 'Budi',
                   email: 'budi@gmail.com',
                   nokamar: 17,
-                  nohandphone: '0823238856',
+                  phone: '0823238856',
                 },
               },
             ];
@@ -48,16 +47,12 @@ export class BookService {
     return new Observable<void>((observer: Observer<void>) => {
       try {
         const checkBooks: number = this.books.findIndex((b) => b.id == book.id);
-        console.log(book);
 
         if (checkBooks < 0) {
           this.books.push(book);
           this.updateSessionStorage();
-          console.log('Yang gak ada');
         } else {
           this.books[checkBooks] = book;
-          console.log('Yang ada');
-          console.log(book);
 
           this.updateSessionStorage();
         }
@@ -110,19 +105,6 @@ export class BookService {
 
         this.updateSessionStorage();
 
-        observer.next();
-      } catch (error) {
-        observer.error(error);
-      }
-      observer.complete();
-    });
-  }
-
-  edit(book: Book): Observable<void> {
-    return new Observable<void>((observer: Observer<void>) => {
-      try {
-        const findBook: number = this.books.findIndex((e) => e.id == book.id);
-        this.books[findBook] = book;
         observer.next();
       } catch (error) {
         observer.error(error);
