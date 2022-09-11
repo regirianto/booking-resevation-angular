@@ -1,0 +1,54 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nama Pemesan</th>
+      <th scope="col">Nomor Kamar</th>
+      <th scope="col">Durasi Menginap</th>
+      <th scope="col">Total Biaya</th>
+      <th scope="col">Jumlah Tamu</th>
+      <th scope="col">Status Pemesanan</th>
+      <th scope="col">Aksi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let book of bookings">
+      <tr>
+        <th scope="row">{{ book.id }}</th>
+        <td>{{ book.reservee.name }}</td>
+        <td>{{ book.roomNumber }}</td>
+        <td>{{ book.duration }} Malam</td>
+        <td>
+          {{ book.duration * HotelPrice | currency: "Rp":"symbol":"3.0" }}
+        </td>
+        <td>{{ book.guestCount }}</td>
+        <td>{{ book.status }}</td>
+        <td>
+          <div class="d-flex gap-3">
+            <button class="btn btn-sm btn-primary" (click)="onCheckIn(book.id)">
+              Checkin
+            </button>
+            <button
+              class="btn btn-sm btn-warning"
+              (click)="onCheckOut(book.id)"
+            >
+              Checkout
+            </button>
+            <button
+              class="btn btn-sm btn-success"
+              routerLink="/book/{{ book.id }}"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-sm btn-danger"
+              (click)="onDeleteReservation(book.id)"
+            >
+              Hapus
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

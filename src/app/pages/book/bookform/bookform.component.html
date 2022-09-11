@@ -1,0 +1,94 @@
+<form
+  class="row g-3"
+  [formGroup]="bookingGroup"
+  (ngSubmit)="onSubmitReservation()"
+>
+  <div class="col-md-6">
+    <label for="nama" class="form-label">Nama</label>
+    <input type="text" class="form-control" id="nama" formControlName="nama" />
+    <ng-container *ngIf="nama?.invalid && (nama?.dirty || nama?.touched)">
+      <p class="text-danger mt-2">* Nama Harus di isi</p>
+    </ng-container>
+  </div>
+  <div class="col-md-6">
+    <label for="email" class="form-label">Email</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      formControlName="email"
+      required
+    />
+    <ng-container *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+      <p class="text-danger mt-2">* Email Harus di isi</p>
+    </ng-container>
+  </div>
+
+  <div class="col-md-6">
+    <label for="nohp" class="form-label">No Handphone</label>
+    <input
+      type="tel"
+      class="form-control"
+      id="nohp"
+      required
+      formControlName="nohandphone"
+    />
+    <ng-container
+      *ngIf="
+        nohandphone?.invalid && (nohandphone?.dirty || nohandphone?.touched)
+      "
+    >
+      <p class="text-danger mt-2">* No Handphone Harus di isi</p>
+    </ng-container>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label">Nomor Kamar</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputPassword4"
+      required
+      formControlName="nokamar"
+    />
+    <ng-container
+      *ngIf="nokamar?.invalid && (nokamar?.dirty || nokamar?.touched)"
+    >
+      <p class="text-danger mt-2">* No kamar Harus di isi</p>
+    </ng-container>
+  </div>
+  <div class="col-6">
+    <label for="inputAddress" class="form-label">Durasi Menginap</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputAddress"
+      formControlName="durasimenginap"
+    />
+    <ng-container
+      *ngIf="
+        durasimenginap?.invalid &&
+        (durasimenginap?.dirty || durasimenginap?.touched)
+      "
+    >
+      <p class="text-danger mt-2">* Durasi Menginap Harus di isi</p>
+    </ng-container>
+  </div>
+  <div class="col-6">
+    <label for="inputAddress2" class="form-label">Jumlah Tamu</label>
+    <input
+      type="number"
+      class="form-control"
+      id="inputAddress2"
+      formControlName="jumlahtamu"
+      required
+    />
+    <ng-container
+      *ngIf="jumlahtamu?.invalid && (jumlahtamu?.dirty || jumlahtamu?.touched)"
+    >
+      <p class="text-danger mt-2">* jumlah Tamu Harus di isi</p>
+    </ng-container>
+  </div>
+  <div class="col-12">
+    <button type="submit" class="btn btn-primary">Pesan Sekarang</button>
+  </div>
+</form>
